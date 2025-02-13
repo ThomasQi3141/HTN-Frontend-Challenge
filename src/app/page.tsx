@@ -11,8 +11,8 @@ const page = () => {
           className="h-screen bg-gradient-to-b from-bgPrimary to-bgSecondary px-5 py-24
                     md:px-24">
           <h1
-            className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent text-4xl font-bold text-center
-                        lg:text-5xl xl:text-6xl">
+            className="text-transparent bg-clip-text bg-gradient-to-r from-primary to-accent 
+             text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold text-center">
             Hack the North 2025
           </h1>
           <h3
