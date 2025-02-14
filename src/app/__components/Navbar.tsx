@@ -1,6 +1,7 @@
 "use client";
 import { useState } from "react";
 import Link from "next/link";
+import MenuButton from "./MenuButton";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import icon from "../icon.png";
@@ -24,14 +25,18 @@ const Navbar = () => {
 
       {/* Navigation links (right hand side) */}
       <div className="hidden md:flex gap-4">
-        <button className="bg-primary hover:bg-accent text-white px-5 py-2 rounded-lg transition">
+        <MenuButton
+          onClick={() => {
+            setIsOpen(false);
+          }}>
           Login
-        </button>
-        <button
-          className="bg-primary hover:bg-accent text-white px-5 py-2 rounded-lg transition"
-          onClick={() => setIsOpen(false)}>
+        </MenuButton>
+        <MenuButton
+          onClick={() => {
+            setIsOpen(false);
+          }}>
           Events
-        </button>
+        </MenuButton>
       </div>
 
       {/* Hamburger menu exit button */}
@@ -48,11 +53,12 @@ const Navbar = () => {
             onClick={() => setIsOpen(false)}>
             Events
           </Link>
-          <button
-            className="bg-primary hover:bg-accent text-white px-5 py-2 rounded-lg transition"
-            onClick={() => setIsOpen(false)}>
+          <MenuButton
+            onClick={() => {
+              setIsOpen(false);
+            }}>
             Login
-          </button>
+          </MenuButton>
         </div>
       )}
     </nav>
