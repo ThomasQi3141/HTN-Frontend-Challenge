@@ -9,7 +9,7 @@ const EventsSidebar = () => {
   const router = useRouter();
 
   return (
-    <aside className="w-64 bg-bgSecondary p-6 flex flex-col space-y-6 shadow-lg lg:flex">
+    <aside className="w-64 bg-bgSecondary p-6 flex flex-col space-y-6 shadow-lg lg:flex hidden">
       {/* Hack The North Logo + Text (click to go home) */}
       <Link
         href="/"

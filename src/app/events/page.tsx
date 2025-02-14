@@ -6,7 +6,8 @@ import { TEvent } from "../__types/index";
 import { useRouter } from "next/navigation";
 import EventCard from "../__components/EventCard";
 import EventsSideBar from "../__components/EventsSidebar";
-import EventsNavbar from "../__components/EventsNavbar"; // ✅ Updated name
+import EventsNavbar from "../__components/EventsNavbar";
+import { useUser } from "@auth0/nextjs-auth0/client";
 
 const eventTypes = ["All", "workshop", "activity", "tech_talk"];
 const sortOptions = ["Ascending", "Descending"];
@@ -14,6 +15,7 @@ const sortOptions = ["Ascending", "Descending"];
 const Events = () => {
   const router = useRouter();
   const { data: eventData, error, isLoading } = useGetEventsQuery();
+  const { user } = useUser();
   const [events, setEvents] = useState<TEvent[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState("All");
@@ -47,9 +49,14 @@ const Events = () => {
       .includes(searchQuery.toLowerCase());
     const matchesType =
       selectedType === "All" || event.event_type === selectedType;
-    return matchesSearch && matchesType;
+
+    // Show private only if user logged in
+    const isAllowed = user ? true : event.permission !== "private";
+
+    return matchesSearch && matchesType && isAllowed;
   });
 
+  // Sort events via start time
   const sortedEvents = [...filteredEvents].sort((a, b) =>
     sortOrder === "Ascending"
       ? a.start_time - b.start_time
@@ -65,7 +72,7 @@ const Events = () => {
       <EventsSideBar />
 
       {/* Events List Section */}
-      <main className="flex-1 p-8 bg-bgPrimary pt-16 md:pt-0">
+      <main className="flex-1 p-8 bg-bgPrimary pt-16 lg:pt-0">
         {/* Top Bar: Title + Search Bar + Filters */}
         <div className="flex flex-col md:flex-row md:justify-between items-center mb-6 gap-4 mt-4">
           <h1 className="text-3xl font-bold text-primary">Events</h1>
