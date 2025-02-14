@@ -20,8 +20,8 @@ const EventsSidebar = () => {
 
       {/* Nav buttons */}
       <div className="flex flex-col space-y-2">
-        <LoginButton />
         <MenuButton onClick={() => router.push("/")}>Home</MenuButton>
+        <LoginButton />
       </div>
     </aside>
   );

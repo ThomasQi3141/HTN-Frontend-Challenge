@@ -6,7 +6,7 @@ const page = () => {
   return (
     <>
       <Navbar />
-      <main className="">
+      <main>
         <div
           className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b 
                      from-bgPrimary to-bgSecondary px-5 py-32 md:px-24 gap-y-6">

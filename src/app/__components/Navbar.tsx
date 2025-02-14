@@ -29,8 +29,8 @@ const Navbar = () => {
 
       {/* Desktop Navigation (Hidden on Small Screens) */}
       <div className="hidden lg:flex gap-4">
-        <LoginButton />
         <MenuButton onClick={() => router.push("/events")}>Events</MenuButton>
+        <LoginButton />
       </div>
 
       {/* Hamburger Menu Button (Mobile Only) */}
@@ -68,10 +68,10 @@ const Navbar = () => {
               />
               <span>Hack The North</span>
             </Link>
-            <LoginButton />
             <MenuButton onClick={() => router.push("/events")}>
               Events
             </MenuButton>
+            <LoginButton />
           </div>
         </>
       )}
