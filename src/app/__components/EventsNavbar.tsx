@@ -6,6 +6,7 @@ import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import icon from "../icon.png";
 import MenuButton from "./MenuButton";
+import LoginButton from "./LoginButton";
 import { useRouter } from "next/navigation";
 
 const EventsNavbar = () => {
@@ -57,7 +58,7 @@ const EventsNavbar = () => {
               }}>
               Home
             </MenuButton>
-            <MenuButton onClick={() => {}}>Login</MenuButton>
+            <LoginButton />
           </div>
         </>
       )}

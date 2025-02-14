@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import MenuButton from "./MenuButton";
 import icon from "../icon.png";
+import LoginButton from "./LoginButton";
 
 const EventsSidebar = () => {
   const router = useRouter();
@@ -19,7 +20,7 @@ const EventsSidebar = () => {
 
       {/* Nav buttons */}
       <div className="flex flex-col space-y-2">
-        <MenuButton onClick={() => {}}>Login</MenuButton>
+        <LoginButton />
         <MenuButton onClick={() => router.push("/")}>Home</MenuButton>
       </div>
     </aside>

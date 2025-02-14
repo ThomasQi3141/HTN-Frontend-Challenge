@@ -4,13 +4,20 @@ import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Menu, X } from "lucide-react";
+import { useUser } from "@auth0/nextjs-auth0/client";
 import Image from "next/image";
 import icon from "../icon.png";
 import MenuButton from "./MenuButton";
+import LoginButton from "./LoginButton";
 
 const Navbar = () => {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { user, isLoading } = useUser();
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <nav className="fixed top-0 left-0 w-full text-white px-6 py-4 lg:px-12 flex items-center justify-between z-50">
@@ -22,7 +29,7 @@ const Navbar = () => {
 
       {/* Desktop Navigation (Hidden on Small Screens) */}
       <div className="hidden lg:flex gap-4">
-        <MenuButton onClick={() => {}}>Login</MenuButton>
+        <LoginButton />
         <MenuButton onClick={() => router.push("/events")}>Events</MenuButton>
       </div>
 
@@ -61,7 +68,7 @@ const Navbar = () => {
               />
               <span>Hack The North</span>
             </Link>
-            <MenuButton onClick={() => {}}>Login</MenuButton>
+            <LoginButton />
             <MenuButton onClick={() => router.push("/events")}>
               Events
             </MenuButton>
