@@ -1,8 +1,20 @@
 import React from "react";
 import { TEvent } from "../__types/index";
-import MenuButton from "./MenuButton"; // Assuming you have this component
+import { useRouter } from "next/navigation";
+import MenuButton from "./MenuButton";
 
 const EventCard = ({ event }: { event: TEvent }) => {
+  const router = useRouter();
+
+  const getReadableEventType = (eventType: string) => {
+    const eventTypeMap: { [key: string]: string } = {
+      workshop: "Workshop",
+      activity: "Activity",
+      tech_talk: "Tech Talk",
+    };
+    return eventTypeMap[eventType] || eventType;
+  };
+
   return (
     <div
       key={event.id}
@@ -25,6 +37,10 @@ const EventCard = ({ event }: { event: TEvent }) => {
         })}
       </p>
 
+      <p className="text-text mt-2">
+        📌 {getReadableEventType(event.event_type)}
+      </p>
+
       {event.speakers.length > 0 && (
         <p className="text-text mt-2">
           🎤 Speakers: {event.speakers.map((s) => s.name).join(", ")}
@@ -34,7 +50,12 @@ const EventCard = ({ event }: { event: TEvent }) => {
       <div className="flex-grow"></div>
       {/* View event button (redirect to event) */}
       <div className="mt-4 flex">
-        <MenuButton onClick={() => {}}>View Event</MenuButton>
+        <MenuButton
+          onClick={() => {
+            router.push(`/events/${event.id}`);
+          }}>
+          View Event
+        </MenuButton>
       </div>
     </div>
   );

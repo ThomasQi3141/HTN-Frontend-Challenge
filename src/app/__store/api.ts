@@ -10,8 +10,11 @@ export const hackTheNorthApi = createApi({
     getEvents: builder.query<TEvent[], void>({
       query: () => "/events",
     }),
+    getEvent: builder.query<TEvent, number>({
+      query: (id) => `/events/${id}`,
+    }),
   }),
 });
 
-export const { useGetEventsQuery } = hackTheNorthApi;
+export const { useGetEventsQuery, useGetEventQuery } = hackTheNorthApi;
 export default hackTheNorthApi;
