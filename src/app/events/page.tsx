@@ -1,32 +1,62 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo } from "react";
 import { useGetEventsQuery } from "../__store/api";
 import { TEvent } from "../__types/index";
-import { useRouter } from "next/navigation";
 import EventCard from "../__components/EventCard";
 import EventsSideBar from "../__components/EventsSidebar";
 import EventsNavbar from "../__components/EventsNavbar";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
+// Event types and sort options used for filters
 const eventTypes = ["All", "workshop", "activity", "tech_talk"];
 const sortOptions = ["Ascending", "Descending"];
 
 const Events = () => {
-  const router = useRouter();
+  // Events data from endpoint
   const { data: eventData, error, isLoading } = useGetEventsQuery();
-  const { user } = useUser();
   const [events, setEvents] = useState<TEvent[]>([]);
+  // States for the search bar & filters
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedType, setSelectedType] = useState("All");
   const [sortOrder, setSortOrder] = useState("Ascending");
 
+  // User data from Auth0
+  const { user } = useUser();
+
+  // Ensure state is set once data is available
   useEffect(() => {
     if (eventData) {
       setEvents(eventData);
     }
   }, [eventData]);
 
+  // Memoize filtered events to reduce re-renders
+  const filteredEvents = useMemo(() => {
+    return events.filter((event) => {
+      const matchesSearch = event.name
+        .toLowerCase()
+        .includes(searchQuery.toLowerCase());
+      const matchesType =
+        selectedType === "All" || event.event_type === selectedType;
+
+      // Show private only if user logged in
+      const isAllowed = !!user || event.permission !== "private";
+
+      return matchesSearch && matchesType && isAllowed;
+    });
+  }, [events, searchQuery, selectedType, user]);
+
+  // Memoize sorted events
+  const sortedEvents = useMemo(() => {
+    return filteredEvents.sort((a, b) =>
+      sortOrder === "Ascending"
+        ? a.start_time - b.start_time
+        : b.start_time - a.start_time
+    );
+  }, [filteredEvents, sortOrder]);
+
+  // Loading and error handling
   if (isLoading) {
     return (
       <div className="flex justify-center items-center min-h-screen text-text">
@@ -42,26 +72,6 @@ const Events = () => {
       </div>
     );
   }
-
-  const filteredEvents = events.filter((event) => {
-    const matchesSearch = event.name
-      .toLowerCase()
-      .includes(searchQuery.toLowerCase());
-    const matchesType =
-      selectedType === "All" || event.event_type === selectedType;
-
-    // Show private only if user logged in
-    const isAllowed = user ? true : event.permission !== "private";
-
-    return matchesSearch && matchesType && isAllowed;
-  });
-
-  // Sort events via start time
-  const sortedEvents = [...filteredEvents].sort((a, b) =>
-    sortOrder === "Ascending"
-      ? a.start_time - b.start_time
-      : b.start_time - a.start_time
-  );
 
   return (
     <div className="flex min-h-screen bg-bgPrimary text-text">
