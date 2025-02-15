@@ -2,9 +2,11 @@
 import Footer from "./__components/Footer";
 import Navbar from "./__components/Navbar";
 
+// Home/Landing Page
 const page = () => {
   return (
     <>
+      {/* Navbar + Main Content */}
       <Navbar />
       <main>
         <div

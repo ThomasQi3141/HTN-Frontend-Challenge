@@ -12,6 +12,7 @@ import { useUser } from "@auth0/nextjs-auth0/client";
 const eventTypes = ["All", "workshop", "activity", "tech_talk"];
 const sortOptions = ["Ascending", "Descending"];
 
+// Events page
 const Events = () => {
   // Events data from endpoint
   const { data: eventData, error, isLoading } = useGetEventsQuery();

@@ -8,15 +8,18 @@ import MenuButton from "../../__components/MenuButton";
 import Navbar from "@/app/__components/Navbar";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
+// View event page (after click into an event)
 const EventPage = () => {
   const router = useRouter();
   const { user } = useUser();
   const params = useParams();
+  // Get the event ID from the URL params to allow user bookmarking
   const eventId = Array.isArray(params.eventId)
     ? params.eventId[0]
     : params.eventId;
   const numericEventId = eventId ? parseInt(eventId, 10) : undefined;
 
+  // Event data fetched from endpoint
   const {
     data: eventData,
     error,
@@ -29,6 +32,7 @@ const EventPage = () => {
   const [event, setEvent] = useState<TEvent>();
   const [relatedEvents, setRelatedEvents] = useState<TEvent[]>([]);
 
+  // useEffects to fetch event data on change
   useEffect(() => {
     if (eventData) {
       setEvent(eventData);
@@ -43,10 +47,12 @@ const EventPage = () => {
     }
   }, [event, eventsData]);
 
+  // Check if data is available
   if (!event) {
     return <div>Loading...</div>;
   }
 
+  // Disallow users to view private events directly via URL if not signed in
   if (!user && event.permission === "private") {
     return (
       <div className="flex justify-center items-center min-h-screen text-text">
@@ -57,10 +63,12 @@ const EventPage = () => {
 
   return (
     <div className="p-4 mt-8 max-w-4xl mx-auto space-y-6">
+      {/* Navigation Bar */}
       <Navbar />
       <h1 className="text-3xl font-bold text-accent">{event.name}</h1>
       <p className="text-text opacity-80">{event.description}</p>
 
+      {/* Event time (start to end, no dates) */}
       <p className="text-text opacity-80">
         📅{" "}
         {new Date(event.start_time).toLocaleString("en-US", {
@@ -77,7 +85,7 @@ const EventPage = () => {
           hour12: true,
         })}
       </p>
-
+      {/* Event Type & Speakers */}
       <p className="text-text">🔖 Type: {event.event_type}</p>
 
       {event.speakers.length > 0 && (
@@ -85,7 +93,7 @@ const EventPage = () => {
           🎤 Speakers: {event.speakers.map((s) => s.name).join(", ")}
         </p>
       )}
-
+      {/* Related Events */}
       {relatedEvents.length > 0 && (
         <div>
           <p className="text-text font-semibold">🔗 Related Events:</p>
@@ -102,6 +110,7 @@ const EventPage = () => {
         </div>
       )}
 
+      {/* Join Event Button (public/private URL depending on user status) */}
       {(user ? event.private_url : event.public_url) && (
         <div className="flex justify-start">
           <MenuButton

@@ -10,6 +10,7 @@ import icon from "../icon.png";
 import MenuButton from "./MenuButton";
 import LoginButton from "./LoginButton";
 
+// Navbar for the home page
 const Navbar = () => {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);

@@ -3,9 +3,11 @@ import { TEvent } from "../__types/index";
 import { useRouter } from "next/navigation";
 import MenuButton from "./MenuButton";
 
+// Card component for each event to be rendered on the events page
 const EventCard = ({ event }: { event: TEvent }) => {
   const router = useRouter();
 
+  // Function to map event type to a more readable format
   const getReadableEventType = (eventType: string) => {
     const eventTypeMap: { [key: string]: string } = {
       workshop: "Workshop",
@@ -37,6 +39,7 @@ const EventCard = ({ event }: { event: TEvent }) => {
         })}
       </p>
 
+      {/* Event type */}
       <p className="text-text mt-2">
         📌 {getReadableEventType(event.event_type)}
       </p>

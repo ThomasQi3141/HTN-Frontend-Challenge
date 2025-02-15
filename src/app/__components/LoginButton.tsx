@@ -5,6 +5,7 @@ import MenuButton from "./MenuButton";
 import { useRouter } from "next/navigation";
 import { useUser } from "@auth0/nextjs-auth0/client";
 
+// Login button component to dynamically handle login and logout
 const LoginButton = () => {
   const router = useRouter();
   const { user, isLoading } = useUser();

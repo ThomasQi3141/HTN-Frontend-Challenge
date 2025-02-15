@@ -5,6 +5,7 @@ import MenuButton from "./MenuButton";
 import icon from "../icon.png";
 import LoginButton from "./LoginButton";
 
+// Sidebar component for the events page (only displays when screen is large enough)
 const EventsSidebar = () => {
   const router = useRouter();
 

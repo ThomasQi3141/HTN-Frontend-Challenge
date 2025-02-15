@@ -9,6 +9,7 @@ import MenuButton from "./MenuButton";
 import LoginButton from "./LoginButton";
 import { useRouter } from "next/navigation";
 
+// Navbar component for the events page (only displays when screen is too small for sidebar)
 const EventsNavbar = () => {
   const [sidebarOpen, setSidebarOpen] = useState(false);
 

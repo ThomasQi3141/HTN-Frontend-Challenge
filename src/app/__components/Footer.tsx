@@ -1,5 +1,6 @@
 import React from "react";
 
+// Footer component used in the main page
 const Footer = () => {
   return (
     <footer className="w-full bg-bgSecondary text-center">

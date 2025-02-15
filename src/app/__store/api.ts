@@ -3,6 +3,7 @@ import { TEvent } from "../__types/index";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:3000";
 
+// RTK Query endpoints
 export const hackTheNorthApi = createApi({
   reducerPath: "hackTheNorthApi",
   baseQuery: fetchBaseQuery({ baseUrl: API_URL }),

@@ -1,5 +1,6 @@
 import React from "react";
 
+// Generic menu button for navigation
 const MenuButton = ({
   children,
   onClick,
